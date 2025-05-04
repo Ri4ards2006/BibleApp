@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -43,7 +44,8 @@ fun App() {
         .fillMaxWidth() // Füllt die gesamte Breite des Bildschirms
         .padding(16.dp) // Fügt Abstand rund um die Box hinzu
         .background(LightCardBackground, shape = RoundedCornerShape(12.dp)) // Hintergrundfarbe mit abgerundeten Ecken
-        .shadow(8.dp, shape = RoundedCornerShape(12.dp), color = Color.Black.copy(alpha = 0.1f)) // Sanfter Schatten für Tiefe
+        .shadow(8.dp, shape = RoundedCornerShape(12.dp)) // <- ohne `color`
+
 
     val buttonModifier = Modifier
         .fillMaxWidth() // Button füllt die ganze Breite
@@ -76,11 +78,62 @@ fun App() {
     var text by remember { mutableStateOf("Bible") }
 
     MaterialTheme {
-        Button(onClick = {
-            text = "Jesus is the Way!"
-        }) {
-            Text(text)
-        }
+
+Column(
+
+    modifier = Modifier
+        .fillMaxSize()
+        .background(LightBackground)
+        .padding(16.dp)) {
+
+    // First Element
+
+    Text(
+        text = "Willkommen in der Bibel-App",
+        modifier = textModifier,
+        style = MaterialTheme.typography.h4.copy(color = LightPrimary),
+        textAlign = TextAlign.Center
+    )
+
+
+    Text(
+        text = "Dein täglicher geistlicher Begleiter",
+        modifier = textModifier,
+            style = MaterialTheme.typography.h6.copy(color =LightSecondary),
+        textAlign = TextAlign.Center
+    )
+
+    Spacer(modifier = Modifier.height(24.dp))// Extra Cooler und großen Abstand zu haben
+
+    Button(
+        onClick = {
+            text = "Jesus is the Way!" // Action for the button
+        },
+        modifier = buttonModifier,
+        colors = ButtonDefaults.buttonColors(backgroundColor = LightAccent)
+    ) {
+        Text(text = "Start") // Button Text
+    }
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // Text to show the change from the button
+    Text(
+        text = text,
+        style = MaterialTheme.typography.h5.copy(color = LightTextPrimary),
+        textAlign = TextAlign.Center
+    )
+
+
+
+}
+
+
+
+
+
+
+
+
     }
 }
 
